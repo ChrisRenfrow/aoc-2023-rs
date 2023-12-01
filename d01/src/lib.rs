@@ -31,7 +31,6 @@ pub fn d01p2(input: String) -> u32 {
 
     input.lines().fold(0, |acc, line| {
         let first_match = num_re_fwd.find(line);
-        // Consume the iterator and return the last match
         let rev_line = line.chars().rev().collect::<String>();
         let last_match = num_re_bck.find(&rev_line);
         let first_digit = line
@@ -62,7 +61,7 @@ pub fn d01p2(input: String) -> u32 {
             },
             match (last_digit, last_match) {
                 // If the last char digit is present and occurs after string digit, use char digit
-                (Some((i, d)), Some(l_mat)) if i > l_mat.start() => d,
+                (Some((i, d)), Some(l_mat)) if i < l_mat.start() => d,
                 // If string digit exists use that, also we need to "unreverse" the match
                 (_, Some(l_mat)) => {
                     let un_rev: &str = &l_mat.as_str().chars().rev().collect::<String>();
@@ -79,7 +78,7 @@ pub fn d01p2(input: String) -> u32 {
 }
 
 #[cfg(test)]
-mod tests {
+mod d01_tests {
     use super::*;
 
     const P1_INPUT: &str = r#"1abc2
@@ -98,17 +97,22 @@ zoneight234
     const P2_ANSWER: u32 = 281;
 
     #[test]
-    fn part_one() {
+    fn passes_part_one() {
         assert!(d01p1(P1_INPUT.to_string()) == P1_ANSWER)
     }
 
     #[test]
-    fn part_two() {
+    fn passes_part_two() {
         assert_eq!(d01p2(P2_INPUT.to_string()), P2_ANSWER)
     }
 
     #[test]
-    fn part_two_custom() {
+    fn captures_overlapping_numbers() {
         assert_eq!(d01p2("eightwo".to_string()), 82);
+    }
+
+    #[test]
+    fn first_digit_last_string() {
+        assert_eq!(d01p2("1two".to_string()), 12);
     }
 }
