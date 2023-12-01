@@ -24,13 +24,16 @@ pub fn d01p2(input: String) -> u32 {
         ("eight", 8),
         ("nine", 9),
     ]);
-    let num_re = Regex::new(r"one|two|three|four|five|six|seven|eight|nine").unwrap();
+    let num_pattern = r"one|two|three|four|five|six|seven|eight|nine";
+    // We need both a forward and reverse match as find only returns non-overlapping matches
+    let num_re_fwd = Regex::new(num_pattern).unwrap();
+    let num_re_bck = Regex::new(&num_pattern.chars().rev().collect::<String>()).unwrap();
 
     input.lines().fold(0, |acc, line| {
-        let mut match_iter = num_re.find_iter(line);
-        let first_match = match_iter.next();
+        let first_match = num_re_fwd.find(line);
         // Consume the iterator and return the last match
-        let last_match = num_re.find_iter(line).last();
+        let rev_line = line.chars().rev().collect::<String>();
+        let last_match = num_re_bck.find(&rev_line);
         let first_digit = line
             .chars()
             .enumerate()
@@ -38,13 +41,14 @@ pub fn d01p2(input: String) -> u32 {
                 Some(d) => Some((i, d)),
                 None => None,
             });
-        let last_digit = line.chars().rev().enumerate().find_map(|(i, c)| {
-            match c.to_digit(10) {
-                // We have to "fix" the index here since enumerate comes after reversing
-                Some(d) => Some((line.len() - i, d)),
+        let last_digit = line
+            .chars()
+            .rev()
+            .enumerate()
+            .find_map(|(i, c)| match c.to_digit(10) {
+                Some(d) => Some((i, d)),
                 None => None,
-            }
-        });
+            });
         // Here we figure out which kind of number should be used as first and last based on their order and existence
         let (first, last) = (
             match (first_digit, first_match) {
@@ -59,14 +63,16 @@ pub fn d01p2(input: String) -> u32 {
             match (last_digit, last_match) {
                 // If the last char digit is present and occurs after string digit, use char digit
                 (Some((i, d)), Some(l_mat)) if i > l_mat.start() => d,
-                // If string digit exists use that
-                (_, Some(f_mat)) => *num_map.get(f_mat.as_str()).unwrap(),
+                // If string digit exists use that, also we need to "unreverse" the match
+                (_, Some(l_mat)) => {
+                    let un_rev: &str = &l_mat.as_str().chars().rev().collect::<String>();
+                    *num_map.get(un_rev).unwrap()
+                }
                 // Default to char digit
                 (Some((_, d)), _) => d,
                 _ => unreachable!(),
             },
         );
-        // dbg!(&line, &first, &last);
 
         acc + first * 10 + last
     })
@@ -99,5 +105,10 @@ zoneight234
     #[test]
     fn part_two() {
         assert_eq!(d01p2(P2_INPUT.to_string()), P2_ANSWER)
+    }
+
+    #[test]
+    fn part_two_custom() {
+        assert_eq!(d01p2("eightwo".to_string()), 82);
     }
 }
