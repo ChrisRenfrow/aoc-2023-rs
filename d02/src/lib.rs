@@ -13,24 +13,48 @@ use nom::{
 };
 
 pub fn d02p1(input: String) -> u32 {
+    // The number of cubes loaded in the bag
+    let (red, green, blue) = (12, 13, 14);
     let games: Vec<Game> = input
         .lines()
         .map(|line| parse_game(line))
         .map(|game| game.unwrap().1)
         .collect();
 
-    println!("{:#?}", games[0]);
-
-    0
+    games.iter().fold(0, |sum, game| {
+        if game.is_valid(red, green, blue) {
+            sum + game.id
+        } else {
+            sum
+        }
+    })
 }
 
 pub fn d02p2(input: String) -> u32 {
     todo!()
 }
+
 #[derive(Debug)]
 struct Game {
     id: u32,
     rounds: Vec<GameRound>,
+}
+
+impl Game {
+    fn is_valid(&self, red: u32, green: u32, blue: u32) -> bool {
+        for round in self.rounds[..].iter() {
+            // Could use a try-pattern to short-circuit
+            if !round.cube_counts.iter().all(|count| match count.color {
+                Color::Red if count.count <= red => true,
+                Color::Green if count.count <= green => true,
+                Color::Blue if count.count <= blue => true,
+                _ => false,
+            }) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 #[derive(Debug)]
