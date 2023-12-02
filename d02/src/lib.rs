@@ -31,7 +31,16 @@ pub fn d02p1(input: String) -> u32 {
 }
 
 pub fn d02p2(input: String) -> u32 {
-    todo!()
+    let games: Vec<Game> = input
+        .lines()
+        .map(|line| parse_game(line))
+        .map(|game| game.unwrap().1)
+        .collect();
+
+    games.iter().fold(0, |acc, game| {
+        let (min_red, min_green, min_blue) = game.get_min_cubes();
+        acc + min_red * min_green * min_blue
+    })
 }
 
 #[derive(Debug)]
@@ -43,7 +52,6 @@ struct Game {
 impl Game {
     fn is_valid(&self, red: u32, green: u32, blue: u32) -> bool {
         for round in self.rounds[..].iter() {
-            // Could use a try-pattern to short-circuit
             if !round.cube_counts.iter().all(|count| match count.color {
                 Color::Red if count.count <= red => true,
                 Color::Green if count.count <= green => true,
@@ -54,6 +62,23 @@ impl Game {
             }
         }
         return true;
+    }
+
+    fn get_min_cubes(&self) -> (u32, u32, u32) {
+        self.rounds.iter().fold(
+            (0, 0, 0),
+            |(round_max_r, round_max_g, round_max_b), round| {
+                round.cube_counts.iter().fold(
+                    (round_max_r, round_max_g, round_max_b),
+                    |(max_red, max_green, max_blue), count| match count.color {
+                        Color::Red if count.count > max_red => (count.count, max_green, max_blue),
+                        Color::Green if count.count > max_green => (max_red, count.count, max_blue),
+                        Color::Blue if count.count > max_blue => (max_red, max_green, count.count),
+                        _ => (max_red, max_green, max_blue),
+                    },
+                )
+            },
+        )
     }
 }
 
@@ -127,15 +152,15 @@ Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#;
     const P2_INPUT: &str = "";
     const P1_ANSWER: u32 = 8;
-    const P2_ANSWER: u32 = 0;
+    const P2_ANSWER: u32 = 2286;
 
     #[test]
     fn passes_part_one() {
-        assert!(d02p1(P1_INPUT.to_string()) == P1_ANSWER)
+        assert_eq!(d02p1(P1_INPUT.to_string()), P1_ANSWER)
     }
 
     #[test]
     fn passes_part_two() {
-        assert_eq!(d02p2(P2_INPUT.to_string()), P2_ANSWER)
+        assert_eq!(d02p2(P1_INPUT.to_string()), P2_ANSWER)
     }
 }
