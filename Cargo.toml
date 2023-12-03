@@ -12,5 +12,5 @@ members = [
 ]
 
 [dependencies]
-d01 = { path = "./d01" }
-d02 = { path = "./d02" }
+d01 = { path = "./solutions/d01" }
+d02 = { path = "./solutions/d02" }
