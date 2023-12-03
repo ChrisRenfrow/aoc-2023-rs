@@ -7,10 +7,12 @@ edition = "2021"
 
 [workspace]
 members = [
-    "d01",
-    "d02"
+    "solutions/d01",
+    "solutions/d02",
+    "solutions/d03",
 ]
 
 [dependencies]
 d01 = { path = "./solutions/d01" }
 d02 = { path = "./solutions/d02" }
+d03 = { path = "./solutions/d03" }
