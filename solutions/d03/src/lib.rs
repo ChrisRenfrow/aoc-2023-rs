@@ -16,6 +16,9 @@ pub fn d03p1(input: String) -> u32 {
     })
 }
 
+// This time, you need to find the gear ratio of every gear
+// and add them all up so that the engineer can figure out
+// which gear needs to be replaced.
 pub fn d03p2(input: String) -> u32 {
     todo!()
 }
@@ -93,7 +96,7 @@ mod d03_tests {
 .664.598.."#;
     const P2_INPUT: &str = r#"{{EXAMPLE_2}}"#;
     const P1_ANSWER: u32 = 4361;
-    const P2_ANSWER: u32 = 0;
+    const P2_ANSWER: u32 = 467835;
 
     #[test]
     fn passes_part_one() {
@@ -103,6 +106,6 @@ mod d03_tests {
     #[test]
     fn passes_part_two() {
         // NOTE: Future-me, make sure you're using the right input before you go throwing `dbg!()` calls everywhere :)
-        assert_eq!(d03p2(P2_INPUT.to_string()), P2_ANSWER)
+        assert_eq!(d03p2(P1_INPUT.to_string()), P2_ANSWER)
     }
 }
