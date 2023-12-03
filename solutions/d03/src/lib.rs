@@ -20,7 +20,27 @@ pub fn d03p1(input: String) -> u32 {
 // and add them all up so that the engineer can figure out
 // which gear needs to be replaced.
 pub fn d03p2(input: String) -> u32 {
-    todo!()
+    let (symbols, numbers) = parse_input(input);
+
+    symbols
+        .iter()
+        .filter(|s| s.chr == '*')
+        .fold(0, |sum, symbol| {
+            let nums: Vec<&PartNum> = numbers
+                .iter()
+                .filter(|n| {
+                    (n.pos.x..n.pos.x + n.len)
+                        .any(|i| is_adjacent(&(Coord { x: i, y: n.pos.y }), &symbol.pos))
+                })
+                .take(2)
+                .collect();
+
+            if nums.len() == 2 {
+                sum + nums.iter().map(|part| part.num).product::<u32>()
+            } else {
+                sum
+            }
+        })
 }
 
 fn parse_input(input: String) -> (Vec<Symbol>, Vec<PartNum>) {
