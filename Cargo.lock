@@ -18,6 +18,7 @@ dependencies = [
  "d01",
  "d02",
  "d03",
+ "d04",
 ]
 
 [[package]]
@@ -40,6 +41,10 @@ version = "0.1.0"
 dependencies = [
  "regex",
 ]
+
+[[package]]
+name = "d04"
+version = "0.1.0"
 
 [[package]]
 name = "memchr"
