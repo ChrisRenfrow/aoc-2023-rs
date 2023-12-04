@@ -9,6 +9,7 @@ use nom::{
 
 pub fn d04p1(input: String) -> u32 {
     let cards = parse_cards(input);
+
     cards.iter().fold(0, |total, card| {
         total
             + card.winning_nums.iter().fold(0, |acc, win| {
@@ -97,7 +98,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"#;
     // Card 6 has no winning numbers, so it is worth no points.
     const P2_INPUT: &str = "";
     const P1_ANSWER: u32 = 13;
-    const P2_ANSWER: u32 = 0;
+    const P2_ANSWER: u32 = 30;
 
     #[test]
     fn parse_num_works() {
