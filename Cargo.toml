@@ -11,6 +11,7 @@ members = [
     "solutions/d02",
     "solutions/d03",
     "solutions/d04",
+    "solutions/d05",
 ]
 
 [dependencies]
@@ -18,3 +19,4 @@ d01 = { path = "./solutions/d01" }
 d02 = { path = "./solutions/d02" }
 d03 = { path = "./solutions/d03" }
 d04 = { path = "./solutions/d04" }
+d05 = { path = "./solutions/d05" }
