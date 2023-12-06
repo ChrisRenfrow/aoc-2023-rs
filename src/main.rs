@@ -14,12 +14,12 @@ fn main() {
     let cli = Cli::parse();
 
     let solutions: Vec<Day> = vec![
-        Day::new(1, Some(&d01p1), Some(&d01p2), day_input(1)),
-        Day::new(2, Some(&d02p1), Some(&d02p2), day_input(2)),
-        Day::new(3, Some(&d03p1), Some(&d03p2), day_input(3)),
-        Day::new(4, Some(&d04p1), None, day_input(4)),
-        Day::new(5, Some(&d05p1), None, day_input(5)),
-        Day::new(6, Some(&d06p1), Some(&d06p2), day_input(6)),
+        Day::new(1, Some(&d01p1), Some(&d01p2)),
+        Day::new(2, Some(&d02p1), Some(&d02p2)),
+        Day::new(3, Some(&d03p1), Some(&d03p2)),
+        Day::new(4, Some(&d04p1), None),
+        Day::new(5, Some(&d05p1), None),
+        Day::new(6, Some(&d06p1), Some(&d06p2)),
     ];
 
     match cli.day {
@@ -46,13 +46,13 @@ struct Day<'a> {
 }
 
 impl<'a> Day<'a> {
-    fn new(
-        num: usize,
-        p1: Option<&'a SolutionFn>,
-        p2: Option<&'a SolutionFn>,
-        input: String,
-    ) -> Self {
-        Self { num, p1, p2, input }
+    fn new(num: usize, p1: Option<&'a SolutionFn>, p2: Option<&'a SolutionFn>) -> Self {
+        Self {
+            num,
+            p1,
+            p2,
+            input: day_input(num),
+        }
     }
 
     fn run(&self) {
