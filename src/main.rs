@@ -3,6 +3,7 @@ use d02::*;
 use d03::*;
 use d04::*;
 use d05::*;
+use d06::*;
 
 fn main() {
     let d01_input = include_str!("../input/d01");
@@ -24,4 +25,8 @@ fn main() {
     let d05_input = include_str!("../input/d05");
     println!("Day 05 Part 1: {}", d05p1(d05_input.to_string()));
     // println!("Day 05 Part 2: {}", d05p2(d05_input.to_string()));
+
+    let d06_input = include_str!("../input/d06");
+    println!("Day 06 Part 1: {}", d06p1(d06_input.to_string()));
+    println!("Day 06 Part 2: {}", d06p2(d06_input.to_string()));
 }
