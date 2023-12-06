@@ -16,6 +16,8 @@ members = [
 ]
 
 [dependencies]
+clap = { version = "4.4.11", features = ["derive"] }
+colored = "2.0.4"
 d01 = { path = "./solutions/d01" }
 d02 = { path = "./solutions/d02" }
 d03 = { path = "./solutions/d03" }
