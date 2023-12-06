@@ -28,6 +28,7 @@ pub fn d05p2(input: String) -> u32 {
 fn parse_input(input: &str) -> IResult<&str, (Vec<usize>, Vec<Map>)> {
     let (input, seeds) = parse_seeds(input)?;
     let (input, _) = multispace1(input)?;
+
     Ok((input, (seeds, parse_maps(input))))
 }
 
