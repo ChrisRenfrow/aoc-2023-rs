@@ -187,6 +187,9 @@ version = "0.1.0"
 [[package]]
 name = "d08"
 version = "0.1.0"
+dependencies = [
+ "nom",
+]
 
 [[package]]
 name = "errno"
