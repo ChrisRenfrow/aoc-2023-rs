@@ -9,6 +9,8 @@ use d03::*;
 use d04::*;
 use d05::*;
 use d06::*;
+use d07::*;
+use d08::*;
 
 fn main() {
     let cli = Cli::parse();
@@ -20,6 +22,8 @@ fn main() {
         Day::new(4, Some(&d04p1), None),
         Day::new(5, Some(&d05p1), None),
         Day::new(6, Some(&d06p1), Some(&d06p2)),
+        Day::new(7, None, None),
+        Day::new(8, Some(&d08p1), None),
     ];
 
     match cli.day {
