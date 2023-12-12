@@ -1,0 +1,29 @@
+// -*- mode: rust -*-
+// USAGE: Replace pattern {{DAY}} with day number (left-padded, two digits)
+
+pub fn d{{DAY}}p1(input: String) -> u32 {
+    todo!()
+}
+
+pub fn d{{DAY}}p2(_input: String) -> u32 {
+    todo!()
+}
+
+#[cfg(test)]
+mod d{{DAY}}_tests {
+    use super::*;
+
+    const P1_INPUT: &str = r#""#;
+    const P1_ANSWER: u32 = 0;
+    const P2_ANSWER: u32 = 0;
+
+    #[test]
+    fn passes_part_one() {
+        assert_eq!(d{{DAY}}p1(P1_INPUT.to_string()), P1_ANSWER);
+    }
+
+    #[test]
+    fn passes_part_two() {
+        assert_eq!(d{{DAY}}p2(P1_INPUT.to_string()), P2_ANSWER)
+    }
+}
