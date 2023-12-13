@@ -24,4 +24,4 @@ new: get_input (new_day default_day_no)
 
 new_day day:
     cargo init --lib solutions/d(printf "%02d" {{day}})
-    sed "s/{{template_day_format}}/$(printf "%02d" {{day}})/g" day_template.rs.txt | sed -e '1,3d' > solutions/src/d(printf "%02d" {{day}})/lib.rs
+    sed "s/{{template_day_format}}/$(printf "%02d" {{day}})/g" day_template.rs.txt | sed -e '1,3d' > solutions/d(printf "%02d" {{day}})/src/lib.rs
